@@ -1,0 +1,7 @@
+name: DailyTasks
+main: me.fortibrine.dailytasks.DailyTasksPlugin
+version: 1.0
+
+api-version: '1.13'
+author: [IJustFortiLive]
+
