@@ -61,7 +61,7 @@ class TwoTasksTask : Task {
 
     override fun giveReward(player: OfflinePlayer) {
         if (isCompleted()) {
-            plugin.taskManager.remove(player, this)
+            plugin.taskManager.reset(player, this)
             plugin.economyManager.depositPlayer(player, 400.0)
         }
     }

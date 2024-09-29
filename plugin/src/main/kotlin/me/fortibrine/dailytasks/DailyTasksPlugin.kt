@@ -5,6 +5,7 @@ import com.j256.ormlite.logger.Logger
 import dev.rollczi.litecommands.LiteCommands
 import dev.rollczi.litecommands.bukkit.LiteBukkitFactory
 import me.fortibrine.dailytasks.commands.DailyCommand
+import me.fortibrine.dailytasks.commands.PluginCommand
 import me.fortibrine.dailytasks.economy.EconomyManager
 import me.fortibrine.dailytasks.listener.BlockBreakListener
 import me.fortibrine.dailytasks.listener.JoinListener
@@ -24,11 +25,14 @@ class DailyTasksPlugin: JavaPlugin() {
     override fun onEnable() {
         this.liteCommands = LiteBukkitFactory.builder("daily-tasks", this)
             .commands(
-                DailyCommand(this)
+                DailyCommand(this),
+                PluginCommand(this)
             )
             .build()
 
         Logger.setGlobalLogLevel(Level.OFF)
+
+        saveDefaultConfig()
 
         listOf(
             BlockBreakListener(this),

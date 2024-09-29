@@ -1,7 +1,12 @@
 name: DailyTasks
 main: me.fortibrine.dailytasks.DailyTasksPlugin
-version: 1.0
+version: '1.0.1'
 
 api-version: '1.13'
 author: [IJustFortiLive]
 
+permissions:
+  elementtestplugin.reload:
+    default: op
+  elementtestplugin.reset:
+    default: op
