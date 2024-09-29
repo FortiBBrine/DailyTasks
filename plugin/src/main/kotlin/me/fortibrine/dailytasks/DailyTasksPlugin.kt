@@ -1,5 +1,7 @@
 package me.fortibrine.dailytasks
 
+import com.j256.ormlite.logger.Level
+import com.j256.ormlite.logger.Logger
 import dev.rollczi.litecommands.LiteCommands
 import dev.rollczi.litecommands.bukkit.LiteBukkitFactory
 import me.fortibrine.dailytasks.commands.DailyCommand
@@ -25,6 +27,8 @@ class DailyTasksPlugin: JavaPlugin() {
                 DailyCommand(this)
             )
             .build()
+
+        Logger.setGlobalLogLevel(Level.OFF)
 
         listOf(
             BlockBreakListener(this),
