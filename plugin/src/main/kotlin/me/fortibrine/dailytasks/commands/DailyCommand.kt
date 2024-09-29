@@ -38,19 +38,28 @@ class DailyCommand (
             .setIngredient('A',
                 IconBuilder()
                     .setIconUpdate { _, player ->
-                        plugin.taskManager.tasks[player.name]?.get(0)?.getItemStack() ?: ItemStack(Material.BARRIER)
+                        plugin.taskManager.tasks[player.name]?.getOrNull(0)?.getItemStack() ?: ItemStack(Material.BARRIER)
+                    }
+                    .setIconClick { _, _, player, _ ->
+                        plugin.taskManager.tasks[player.name]?.getOrNull(0)?.giveReward(player)
                     }
             )
             .setIngredient('B',
                 IconBuilder()
                     .setIconUpdate { _, player ->
-                        plugin.taskManager.tasks[player.name]?.get(1)?.getItemStack() ?: ItemStack(Material.BARRIER)
+                        plugin.taskManager.tasks[player.name]?.getOrNull(1)?.getItemStack() ?: ItemStack(Material.BARRIER)
+                    }
+                    .setIconClick { _, _, player, _ ->
+                        plugin.taskManager.tasks[player.name]?.getOrNull(1)?.giveReward(player)
                     }
             )
             .setIngredient('C',
                 IconBuilder()
                     .setIconUpdate { _, player ->
-                        plugin.taskManager.tasks[player.name]?.get(2)?.getItemStack() ?: ItemStack(Material.BARRIER)
+                        plugin.taskManager.tasks[player.name]?.getOrNull(2)?.getItemStack() ?: ItemStack(Material.BARRIER)
+                    }
+                    .setIconClick { _, _, player, _ ->
+                        plugin.taskManager.tasks[player.name]?.getOrNull(2)?.giveReward(player)
                     }
             )
 

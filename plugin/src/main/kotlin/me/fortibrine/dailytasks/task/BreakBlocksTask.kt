@@ -9,9 +9,11 @@ import org.bukkit.OfflinePlayer
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.SkullMeta
 
-class BreakBlocksTask (
-    private val plugin: DailyTasksPlugin
-) : Task {
+class BreakBlocksTask : Task {
+
+    @Transient
+    private val plugin: DailyTasksPlugin =
+        Bukkit.getPluginManager().getPlugin("DailyTasks") as DailyTasksPlugin
 
     var current: Int = 0
         private set
@@ -23,7 +25,7 @@ class BreakBlocksTask (
         if (isCompleted()) return
 
         current ++
-        println(current)
+        plugin.taskManager.save(player)
 
         if (isCompleted()) {
             Bukkit.getPluginManager().callEvent(TaskCompleteEvent(this, player))
@@ -59,7 +61,10 @@ class BreakBlocksTask (
         }
 
     override fun giveReward(player: OfflinePlayer) {
-        plugin.economyManager.depositPlayer(player, 200.0)
+        if (isCompleted()) {
+            plugin.taskManager.remove(player, this)
+            plugin.economyManager.depositPlayer(player, 200.0)
+        }
     }
 
 }

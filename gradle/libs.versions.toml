@@ -7,7 +7,6 @@ menuinv = "1.5.10"
 vault = "1.7"
 ormlite = "6.1"
 h2 = "2.3.232"
-hikaricp = "4.0.3"
 
 [libraries]
 paper-api = { module = "com.destroystokyo.paper:paper-api", version.ref = "paper" }
@@ -16,7 +15,6 @@ menuinv = { module = "com.github.BoomEaro:MenuInv", version.ref = "menuinv" }
 vault = { module = "com.github.MilkBowl:VaultAPI", version.ref = "vault" }
 ormlite = { module = "com.j256.ormlite:ormlite-jdbc", version.ref = "ormlite" }
 h2 = { module = "com.h2database:h2", version.ref = "h2" }
-hikaricp = { module = "com.zaxxer:HikariCP", version.ref = "hikaricp" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
