@@ -16,6 +16,7 @@ import me.fortibrine.dailytasks.task.ZombieKillTask
 import me.fortibrine.dailytasks.task.table.PlayerTasks
 import org.bukkit.OfflinePlayer
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder
+import java.util.*
 
 class TaskManager (
     private val plugin: DailyTasksPlugin
@@ -27,7 +28,7 @@ class TaskManager (
 
     val tasks: MutableMap<String, List<Task>> = mutableMapOf()
     private val connectionSource = JdbcPooledConnectionSource(
-        "jdbc:h2:~/test2"
+        plugin.config.getString("database.url")
     ).apply {
         TableUtils.createTableIfNotExists(this, PlayerTasks::class.java)
     }
@@ -36,7 +37,16 @@ class TaskManager (
         PlayerTasks::class.java
     )
 
-    fun remove(player: OfflinePlayer, task: Task) {
+    fun reset(player: OfflinePlayer) {
+        tasks[player.name] = listOf(
+            BreakBlocksTask(),
+            ZombieKillTask(),
+            TwoTasksTask()
+        )
+        save(player)
+    }
+
+    fun reset(player: OfflinePlayer, task: Task) {
         val playerTasks = tasks[player.name] ?: emptyList()
         val mutablePlayerTasks = playerTasks.toMutableList()
         mutablePlayerTasks.remove(task)
@@ -65,12 +75,12 @@ class TaskManager (
         val playerTasks = playerTasksDao.queryForId(player.name)
 
         if (playerTasks == null) {
-            tasks[player.name] = listOf(
-                BreakBlocksTask(),
-                ZombieKillTask(),
-                TwoTasksTask()
-            )
+            reset(player)
+            return
+        }
 
+        if (Calendar.getInstance().apply { time = playerTasks.date ?: Date() }.get(Calendar.DAY_OF_MONTH) != Calendar.getInstance().get(Calendar.DAY_OF_MONTH)) {
+            reset(player)
             return
         }
 
