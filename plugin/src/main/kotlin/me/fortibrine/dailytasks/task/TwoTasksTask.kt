@@ -9,9 +9,11 @@ import org.bukkit.OfflinePlayer
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.SkullMeta
 
-class TwoTasksTask (
-    private val plugin: DailyTasksPlugin
-) : Task {
+class TwoTasksTask : Task {
+
+    @Transient
+    private val plugin: DailyTasksPlugin =
+        Bukkit.getPluginManager().getPlugin("DailyTasks") as DailyTasksPlugin
 
     var current: Int = 0
         private set
@@ -58,7 +60,10 @@ class TwoTasksTask (
         }
 
     override fun giveReward(player: OfflinePlayer) {
-        plugin.economyManager.depositPlayer(player, 400.0)
+        if (isCompleted()) {
+            plugin.taskManager.remove(player, this)
+            plugin.economyManager.depositPlayer(player, 400.0)
+        }
     }
 
 }
